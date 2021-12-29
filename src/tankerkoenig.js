@@ -1,5 +1,5 @@
-module.exports = function (RED) {
-    function Tankerkoenig2Config (config) {
+module.exports = (RED) => {
+    const Tankerkoenig2Config = (config) => {
         RED.nodes.createNode(this, config);
 
         this.name = config.name;
@@ -9,19 +9,20 @@ module.exports = function (RED) {
     RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config)
 
 
-    function Tankerkoenig2Radius (config) {
-        RED.nodes.createNode(this, config);
+    const Tankerkoenig2Radius = (config) => {
+        let node = this;
+        RED.nodes.createNode(node, config);
 
-        this.config = RED.nodes.getNode(config.config);
-        if (!this.config) {
+        node.config = RED.nodes.getNode(config.config);
+        if (!node.config || !node.config.key) {
+            node.error('Configuration node is invalid');
             return false;
         }
 
-        this.on('input', function (msg) {
-            msg.payload = config;
-            msg.payload.config = this.config;
+        node.on('input', (msg) => {
 
-            this.send(msg);
+
+            node.send(msg);
         });
     }
 
