@@ -31,44 +31,68 @@ module.exports = (RED) => {
                 apikey: node.config.key,
             };
 
-            const req_opts = {
-                hostname: 'creativecommons.tankerkoenig.de',
-                port: 443,
-                path: '/json/list.php?' + new URLSearchParams(params).toString(),
-                method: 'GET',
-            };
+            res = Tankerkoenig2Request('/json/list.php', params);
+            if (res.status === 'error') {
+                node.error(res.data);
+                return;
+            }
 
-            const req = https.request(req_opts, (res) => {
-                let data = '';
-
-                res.on('data', (chunk) => {
-                    data += chunk;
-                });
-
-                res.on('end', () => {
-                    try {
-                        data = JSON.parse(data);
-
-                        if (data.status === 'error') {
-                            throw data.message;
-                        }
-
-                        msg.payload = data;
-                        node.send(msg);
-                    }
-                    catch (error) {
-                        node.error(error);
-                    }
-                });
-            });
-
-            req.on('error', (error) => {
-                node.error(error);
-            });
-
-            req.end();
+            msg.payload = res.data;
+            node.send(msg);
         });
     }
 
     RED.nodes.registerType('tankerkoenig2-radius', Tankerkoenig2Radius);
+
+
+    function Tankerkoenig2Request (path, params) {
+        let res = {};
+
+        const req_opts = {
+            hostname: 'creativecommons.tankerkoenig.de',
+            port: 443,
+            path: path + '?' + new URLSearchParams(params).toString(),
+            method: 'GET',
+        };
+
+        const req = https.request(req_opts, (res) => {
+            let data = '';
+
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            res.on('end', () => {
+                try {
+                    data = JSON.parse(data);
+
+                    if (data.status === 'error') {
+                        throw data.message;
+                    }
+
+                    res = {
+                        status: 'ok',
+                        data: data,
+                    };
+                }
+                catch (error) {
+                    res = {
+                        status: 'error',
+                        data: error,
+                    };
+                }
+            });
+        });
+
+        req.on('error', (error) => {
+            res = {
+                status: 'error',
+                data: error,
+            };
+        });
+
+        req.end();
+
+        return res;
+    }
 }
