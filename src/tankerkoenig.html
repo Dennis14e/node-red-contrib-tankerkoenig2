@@ -60,45 +60,46 @@
             fueltype: {
                 value: 'all',
                 required: true,
-                options: [
-                    {
-                        value: 'all',
-                        label: 'All',
-                    },
-                    {
-                        value: 'e5',
-                        label: 'E5',
-                    },
-                    {
-                        value: 'e10',
-                        label: 'E10',
-                    },
-                    {
-                        value: 'diesel',
-                        label: 'Diesel',
-                    },
-                ],
             },
             sort: {
                 value: 'dist',
                 required: true,
-                options: [
-                    {
-                        value: 'dist',
-                        label: 'Distance',
-                    },
-                    {
-                        value: 'price',
-                        label: 'Price',
-                    },
-                ],
             },
-        },
-        label: function () {
-            return this.name || 'Tankerkönig Radius';
         },
         inputs: 1,
         outputs: 1,
+        label: function () {
+            return this.name || 'Tankerkönig Radius';
+        },
+        oneditprepare: function () {
+            $('#node-input-fueltype').typedInput({
+                type: 'fueltype',
+                types: [
+                    {
+                        value: 'fueltype',
+                        options: [
+                            { value: 'all',    label: 'All'    },
+                            { value: 'e5',     label: 'E5'     },
+                            { value: 'e10',    label: 'E10'    },
+                            { value: 'diesel', label: 'Diesel' },
+                        ],
+                    },
+                ],
+            });
+
+            $('#node-input-fueltype').typedInput({
+                type: 'sort',
+                types: [
+                    {
+                        value: 'sort',
+                        options: [
+                            { value: 'dist',  label: 'Distance' },
+                            { value: 'price', label: 'Price'    },
+                        ],
+                    },
+                ],
+            });
+        },
     });
 </script>
 
