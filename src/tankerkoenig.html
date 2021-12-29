@@ -3,9 +3,6 @@
         category: 'config',
         icon: 'font-awesome/fa-car',
         defaults: {
-            name: {
-                value: '',
-            },
             key: {
                 value: '',
                 required: true,
@@ -19,11 +16,6 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-config">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-config-input-name">
-    </div>
-
-    <div class="form-row">
         <label for="node-config-input-key"><i class="fa fa-key"></i> API Key</label>
         <input type="text" id="node-config-input-key">
     </div>
@@ -32,13 +24,9 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('tankerkoenig2-radius', {
-        category: 'tankerkoenig2',
+        category: 'Tankerkönig 2',
         icon: 'font-awesome/fa-car',
         defaults: {
-            name: {
-                value: '',
-                required: false,
-            },
             config: {
                 value: '',
                 required: true,
@@ -107,10 +95,6 @@
 
 
 <script type="text/html" data-template-name="tankerkoenig2-radius">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
     <div class="form-row">
         <label for="node-input-config"><i class="fa fa-cog"></i> API Config</label>
         <input type="text" id="node-input-config">
