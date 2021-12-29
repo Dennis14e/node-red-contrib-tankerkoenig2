@@ -15,6 +15,7 @@ module.exports = function (RED) {
 
         node.on('input', function (msg) {
             msg.payload = config;
+            node.send(msg);
         });
     }
 
