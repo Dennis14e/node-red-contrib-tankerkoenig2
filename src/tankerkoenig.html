@@ -1,0 +1,135 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-config', {
+        category: 'config',
+        defaults: {
+            name: {
+                value: '',
+            },
+            key: {
+                value: '',
+                required: true,
+            },
+        },
+        label: function () {
+            return this.name || 'Tankerkönig API';
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="tankerkoenig2-config">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="fa fa-key"></i> API Key</label>
+        <input type="text" id="node-config-input-key">
+    </div>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-radius', {
+        category: 'tankerkoenig2',
+        defaults: {
+            name: {
+                value: '',
+                required: false,
+            },
+            config: {
+                value: '',
+                required: true,
+                type: 'tankerkoenig2-config',
+            },
+            latitude: {
+                value: '',
+                required: true,
+                validate: RED.validators.regex(/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/),
+            },
+            longitude: {
+                value: '',
+                required: true,
+                validate: RED.validators.regex(/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/),
+            },
+            radius: {
+                value: 5,
+                required: true,
+                validate: RED.validators.number(),
+            },
+            fueltype: {
+                value: 'all',
+                required: true,
+                options: [
+                    {
+                        value: 'all',
+                        label: 'All',
+                    },
+                    {
+                        value: 'e5',
+                        label: 'E5',
+                    },
+                    {
+                        value: 'e10',
+                        label: 'E10',
+                    },
+                    {
+                        value: 'diesel',
+                        label: 'Diesel',
+                    },
+                ],
+            },
+            sort: {
+                value: 'dist',
+                required: true,
+                options: [
+                    {
+                        value: 'dist',
+                        label: 'Distance',
+                    },
+                    {
+                        value: 'price',
+                        label: 'Price',
+                    },
+                ],
+            },
+        },
+        label: function () {
+            return this.name || 'Tankerkönig Radius';
+        },
+        inputs: 1,
+        outputs: 1,
+    });
+</script>
+
+
+<script type="text/html" data-template-name="tankerkoenig2-radius">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-config"><i class="fa fa-cog"></i> API Config</label>
+        <input type="text" id="node-input-config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-latitude"><i class="fa fa-globe"></i> Latitude</label>
+        <input type="text" id="node-input-latitude">
+    </div>
+    <div class="form-row">
+        <label for="node-input-longitude"><i class="fa fa-globe"></i> Longitude</label>
+        <input type="text" id="node-input-longitude">
+    </div>
+    <div class="form-row">
+        <label for="node-input-radius"><i class="fa fa-circle-o"></i> Radius (km)</label>
+        <input type="text" id="node-input-radius">
+    </div>
+    <div class="form-row">
+        <label for="node-input-fueltype"><i class="fa fa-car"></i> Fuel type</label>
+        <input type="text" id="node-input-fueltype">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sort"><i class="fa fa-sort"></i> Sort</label>
+        <input type="text" id="node-input-sort">
+    </div>
+</script>
