@@ -63,7 +63,7 @@ module.exports = (RED) => {
             });
 
             req.on('error', (error) => {
-                self.error(error);
+                node.error(error);
             });
 
             req.end();
