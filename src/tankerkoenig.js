@@ -3,20 +3,22 @@ const https = require('https');
 module.exports = (RED) => {
     function Tankerkoenig2Config (config) {
         RED.nodes.createNode(this, config);
-
-        this.name = config.name;
-        this.key = config.key;
     }
 
-    RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config)
+    RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config, {
+        credentials: {
+            key: {
+                type: 'text',
+            },
+        },
+    });
 
 
     function Tankerkoenig2Radius (config) {
         let node = this;
         RED.nodes.createNode(node, config);
 
-        node.config = RED.nodes.getNode(config.config);
-        if (!node.config || !node.config.key) {
+        if (!node.credentials.key) {
             node.error('Configuration node is invalid');
             return false;
         }
@@ -32,6 +34,8 @@ module.exports = (RED) => {
             };
 
             res = Tankerkoenig2Request('/json/list.php', params);
+            console.log(res);
+
             if (res.status === 'error') {
                 node.error(res.data);
                 return;
