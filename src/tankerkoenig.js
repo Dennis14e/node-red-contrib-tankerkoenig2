@@ -12,14 +12,14 @@ module.exports = function (RED) {
     function Tankerkoenig2Radius (config) {
         RED.nodes.createNode(this, config);
 
-        this.key = RED.nodes.getNode(config.key);
-        if (!this.key) {
+        this.config = RED.nodes.getNode(config.config);
+        if (!this.config) {
             return false;
         }
 
         this.on('input', function (msg) {
             msg.payload = config;
-            msg.payload.key = this.key;
+            msg.payload.config = this.config;
 
             this.send(msg);
         });
