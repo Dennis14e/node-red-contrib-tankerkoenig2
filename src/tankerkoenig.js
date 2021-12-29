@@ -11,11 +11,17 @@ module.exports = function (RED) {
 
     function Tankerkoenig2Radius (config) {
         RED.nodes.createNode(this, config);
-        var node = this;
 
-        node.on('input', function (msg) {
+        this.key = RED.nodes.getNode(config.key);
+        if (!this.key) {
+            return false;
+        }
+
+        this.on('input', function (msg) {
             msg.payload = config;
-            node.send(msg);
+            msg.payload.key = this.key;
+
+            this.send(msg);
         });
     }
 
