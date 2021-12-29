@@ -1,7 +1,7 @@
 const https = require('https');
 
 module.exports = (RED) => {
-    const Tankerkoenig2Config = (config) => {
+    function Tankerkoenig2Config (config) {
         RED.nodes.createNode(this, config);
 
         this.name = config.name;
@@ -11,7 +11,7 @@ module.exports = (RED) => {
     RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config)
 
 
-    const Tankerkoenig2Radius = (config) => {
+    function Tankerkoenig2Radius (config) {
         let node = this;
         RED.nodes.createNode(node, config);
 
