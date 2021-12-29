@@ -61,6 +61,12 @@ module.exports = (RED) => {
                     }
                 });
             });
+
+            req.on('error', (error) => {
+                self.error(error);
+            });
+
+            req.end();
         });
     }
 
