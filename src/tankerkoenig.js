@@ -34,7 +34,7 @@ module.exports = (RED) => {
             };
 
             res = Tankerkoenig2Request('/json/list.php', params);
-            console.log(res);
+            node.log(res);
 
             if (res.status === 'error') {
                 node.error(res.data);
