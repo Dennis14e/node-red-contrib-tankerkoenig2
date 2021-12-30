@@ -18,7 +18,8 @@ module.exports = (RED) => {
         let node = this;
         RED.nodes.createNode(node, config);
 
-        if (!node.credentials.key) {
+        node.config = RED.nodes.getNode(config.config);
+        if (!node.config || !node.config.credentials.key) {
             node.error('Configuration node is invalid');
             return false;
         }
@@ -30,7 +31,7 @@ module.exports = (RED) => {
                 rad:    msg.radius    || config.radius,
                 sort:   msg.sort      || config.sort,
                 type:   msg.fueltype  || config.fueltype,
-                apikey: node.config.key,
+                apikey: node.config.credentials.key,
             };
 
             res = Tankerkoenig2Request('/json/list.php', params);
