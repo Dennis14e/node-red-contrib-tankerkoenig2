@@ -1,3 +1,4 @@
+const util = require('util');
 const https = require('https');
 
 module.exports = (RED) => {
@@ -35,7 +36,7 @@ module.exports = (RED) => {
             };
 
             res = Tankerkoenig2Request('/json/list.php', params);
-            node.log(res);
+            node.log(util.inspect(res));
 
             if (res.status === 'error') {
                 node.error(res.data);
