@@ -25,7 +25,7 @@ module.exports = (RED) => {
             return false;
         }
 
-        node.on('input', (msg) => {
+        node.on('input', async (msg) => {
             const params = {
                 lat:    msg.latitude  || config.latitude,
                 lng:    msg.longitude || config.longitude,
