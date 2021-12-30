@@ -15,7 +15,7 @@ module.exports = (RED) => {
     });
 
 
-    function Tankerkoenig2Radius (config) {
+    async function Tankerkoenig2Radius (config) {
         let node = this;
         RED.nodes.createNode(node, config);
 
@@ -35,7 +35,7 @@ module.exports = (RED) => {
                 apikey: node.config.credentials.key,
             };
 
-            res = Tankerkoenig2Request('/json/list.php', params);
+            const res = await Tankerkoenig2Request('/json/list.php', params);
             node.log(util.inspect(res));
 
             if (res.status === 'error') {
@@ -51,54 +51,52 @@ module.exports = (RED) => {
     RED.nodes.registerType('tankerkoenig2-radius', Tankerkoenig2Radius);
 
 
-    function Tankerkoenig2Request (path, params) {
-        let res = {};
-
-        const req_opts = {
-            hostname: 'creativecommons.tankerkoenig.de',
-            port: 443,
-            path: path + '?' + new URLSearchParams(params).toString(),
-            method: 'GET',
-        };
-
-        const req = https.request(req_opts, (res) => {
-            let data = '';
-
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            res.on('end', () => {
-                try {
-                    data = JSON.parse(data);
-
-                    if (data.status === 'error') {
-                        throw data.message;
-                    }
-
-                    res = {
-                        status: 'ok',
-                        data: data,
-                    };
-                }
-                catch (error) {
-                    res = {
-                        status: 'error',
-                        data: error,
-                    };
-                }
-            });
-        });
-
-        req.on('error', (error) => {
-            res = {
-                status: 'error',
-                data: error,
+    async function Tankerkoenig2Request (path, params) {
+        return new Promise((resolve, reject) => {
+            const req_opts = {
+                hostname: 'creativecommons.tankerkoenig.de',
+                port: 443,
+                path: path + '?' + new URLSearchParams(params).toString(),
+                method: 'GET',
             };
+
+            const req = https.request(req_opts, (res) => {
+                let data = '';
+
+                res.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                res.on('end', () => {
+                    try {
+                        data = JSON.parse(data);
+
+                        if (data.status === 'error') {
+                            throw data.message;
+                        }
+
+                        resolve({
+                            status: 'ok',
+                            data: data,
+                        });
+                    }
+                    catch (error) {
+                        reject({
+                            status: 'error',
+                            data: error,
+                        });
+                    }
+                });
+            });
+
+            req.on('error', (error) => {
+                reject({
+                    status: 'error',
+                    data: error,
+                });
+            });
+
+            req.end();
         });
-
-        req.end();
-
-        return res;
     }
 }
