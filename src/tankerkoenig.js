@@ -15,7 +15,7 @@ module.exports = (RED) => {
     });
 
 
-    async function Tankerkoenig2Radius (config) {
+    function Tankerkoenig2Radius (config) {
         let node = this;
         RED.nodes.createNode(node, config);
 
