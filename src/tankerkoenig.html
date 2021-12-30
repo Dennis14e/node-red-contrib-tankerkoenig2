@@ -68,13 +68,13 @@
     <dl class="message-properties">
         <dt class="optional">
             latitude
-            <span class="property-type">string | float</span>
+            <span class="property-type">string</span>
         </dt>
         <dd>the latitude of the location</dd>
 
         <dt class="optional">
             longitude
-            <span class="property-type">string | float</span>
+            <span class="property-type">string</span>
         </dt>
         <dd>the longitude of the location</dd>
 
@@ -89,6 +89,12 @@
             <span class="property-type">string</span>
         </dt>
         <dd>the fuel type (possible values: <code>all</code>, <code>e5</code>, <code>e10</code>, <code>diesel</code>)</dd>
+
+        <dt class="optional">
+            name
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the name of the node</dd>
     </dl>
 
     <h3>Outputs</h3>
@@ -167,6 +173,72 @@
                     },
                 ],
             });
+        },
+    });
+</script>
+
+
+<script type="text/html" data-template-name="tankerkoenig2-prices">
+    <div class="form-row">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
+        <input type="text" id="node-input-configNode">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ids"><i class="fa fa-globe"></i> IDs</label>
+        <input type="text" id="node-input-ids">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tankerkoenig2-prices">
+    <p>Get fuel prices by gas station IDs from Tankerkönig.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">
+            ids
+            <span class="property-type">string</span>
+        </dt>
+        <dd>comma-separated list of gas station IDs</dd>
+
+        <dt class="optional">
+            name
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the name of the node</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-prices', {
+        category: 'Tankerkönig 2',
+        icon: 'font-awesome/fa-car',
+        defaults: {
+            configNode: {
+                value: '',
+                required: true,
+                type: 'tankerkoenig2-config',
+            },
+            ids: {
+                value: '',
+                required: true,
+            },
+            name: {
+                value: '',
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        label: () => {
+            return this.name || 'Tankerkönig Prices';
+        },
+        labelStyle: () => {
+            return this.name ? 'node_label_italic' : '';
         },
     });
 </script>
