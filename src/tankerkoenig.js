@@ -1,8 +1,10 @@
 const https = require('https');
 
 module.exports = (RED) => {
-    function Tankerkoenig2Config (config) {
-        RED.nodes.createNode(this, config);
+    'use strict';
+
+    function Tankerkoenig2Config (input) {
+        RED.nodes.createNode(this, input);
     }
 
     RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config, {
@@ -14,11 +16,21 @@ module.exports = (RED) => {
     });
 
 
-    function Tankerkoenig2Radius (config) {
-        let node = this;
-        RED.nodes.createNode(node, config);
+    function Tankerkoenig2Radius (input) {
+        RED.nodes.createNode(this, input);
+        const node = this;
 
-        node.config = RED.nodes.getNode(config.config);
+        [
+            'configNode',
+            'latitude',
+            'longitude',
+            'radius',
+            'sort',
+            'fueltype',
+            'name',
+        ].forEach(k => node[k] = input[k]);
+
+        node.config = RED.nodes.getNode(node.configNode);
         if (!node.config || !node.config.credentials.key) {
             node.error('Configuration node is invalid');
             return false;
@@ -26,11 +38,11 @@ module.exports = (RED) => {
 
         node.on('input', async (msg) => {
             const params = {
-                lat:    msg.latitude  || config.latitude,
-                lng:    msg.longitude || config.longitude,
-                rad:    msg.radius    || config.radius,
-                sort:   msg.sort      || config.sort,
-                type:   msg.fueltype  || config.fueltype,
+                lat:    msg.latitude  || node.latitude,
+                lng:    msg.longitude || node.longitude,
+                rad:    msg.radius    || node.radius,
+                sort:   msg.sort      || node.sort,
+                type:   msg.fueltype  || node.fueltype,
                 apikey: node.config.credentials.key,
             };
 

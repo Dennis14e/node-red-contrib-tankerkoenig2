@@ -32,8 +32,8 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-radius">
     <div class="form-row">
-        <label for="node-input-config"><i class="fa fa-cog"></i> API Config</label>
-        <input type="text" id="node-input-config">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
+        <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
         <label for="node-input-latitude"><i class="fa fa-globe"></i> Latitude</label>
@@ -99,7 +99,7 @@
         category: 'Tankerkönig 2',
         icon: 'font-awesome/fa-car',
         defaults: {
-            config: {
+            configNode: {
                 value: '',
                 required: true,
                 type: 'tankerkoenig2-config',
