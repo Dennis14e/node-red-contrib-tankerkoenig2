@@ -97,12 +97,6 @@
             <span class="property-type">string</span>
         </dt>
         <dd>the fuel type (possible values: <code>all</code>, <code>e5</code>, <code>e10</code>, <code>diesel</code>)</dd>
-
-        <dt class="optional">
-            name
-            <span class="property-type">string</span>
-        </dt>
-        <dd>the name of the node</dd>
     </dl>
 </script>
 
@@ -182,12 +176,6 @@
             <span class="property-type">string</span>
         </dt>
         <dd>comma-separated list of gas station IDs</dd>
-
-        <dt class="optional">
-            name
-            <span class="property-type">string</span>
-        </dt>
-        <dd>the name of the node</dd>
     </dl>
 </script>
 
@@ -248,12 +236,6 @@
             <span class="property-type">string</span>
         </dt>
         <dd>the gas station id</dd>
-
-        <dt class="optional">
-            name
-            <span class="property-type">string</span>
-        </dt>
-        <dd>the name of the node</dd>
     </dl>
 </script>
 
@@ -281,6 +263,105 @@
         paletteLabel: 'Tankerkönig Detail',
         label: function () {
             return this.name || 'Tankerkönig Detail';
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
+    });
+</script>
+
+
+<script type="text/html" data-template-name="tankerkoenig2-complaint">
+    <div class="form-row">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
+        <input type="text" id="node-input-configNode">
+    </div>
+    <div class="form-row">
+        <label for="node-input-type"><i class="fa fa-globe"></i> Complaint type</label>
+        <select id="node-input-type" style="width: 70%;">
+            <option value="wrongPetrolStationName">wrongPetrolStationName</option>
+            <option value="wrongStatusOpen">wrongStatusOpen</option>
+            <option value="wrongStatusClosed">wrongStatusClosed</option>
+            <option value="wrongPriceE5">wrongPriceE5</option>
+            <option value="wrongPriceE10">wrongPriceE10</option>
+            <option value="wrongPriceDiesel">wrongPriceDiesel</option>
+            <option value="wrongPetrolStationBrand">wrongPetrolStationBrand</option>
+            <option value="wrongPetrolStationStreet">wrongPetrolStationStreet</option>
+            <option value="wrongPetrolStationHouseNumber">wrongPetrolStationHouseNumber</option>
+            <option value="wrongPetrolStationPostcode">wrongPetrolStationPostcode</option>
+            <option value="wrongPetrolStationPlace">wrongPetrolStationPlace</option>
+            <option value="wrongPetrolStationLocation">wrongPetrolStationLocation</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-correction"><i class="fa fa-globe"></i> Correction</label>
+        <input type="text" id="node-input-correction">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tankerkoenig2-complaint">
+    <p>Send complaint to Tankerkönig/MTS-K.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">
+            id
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the gas station id</dd>
+
+        <dt class="optional">
+            type
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the complaint type</dd>
+
+        <dt class="optional">
+            correction
+            <span class="property-type">any</span>
+        </dt>
+        <dd>the optional correction</dd>
+
+        <dt class="optional">
+            ts
+            <span class="property-type">number</span>
+        </dt>
+        <dd>the optional unix timestamp</dd>
+    </dl>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-complaint', {
+        category: 'Tankerkönig 2',
+        icon: 'font-awesome/fa-car',
+        defaults: {
+            configNode: {
+                value: '',
+                required: true,
+                type: 'tankerkoenig2-config',
+            },
+            type: {
+                value: '',
+                required: true,
+            },
+            correction: {
+                value: '',
+                required: false,
+            },
+            name: {
+                value: '',
+                required: false,
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        paletteLabel: 'Tankerkönig Complaint',
+        label: function () {
+            return this.name || 'Tankerkönig Complaint';
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';

@@ -49,9 +49,9 @@ module.exports = (RED) => {
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('/json/list.php', params);
+            const res = await Tankerkoenig2Request('GET', '/json/list.php', params);
 
-            if (res.status === 'error') {
+            if (res.status !== 'ok') {
                 node.error(res.data);
                 return;
             }
@@ -86,9 +86,9 @@ module.exports = (RED) => {
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('/json/prices.php', params);
+            const res = await Tankerkoenig2Request('GET', '/json/prices.php', params);
 
-            if (res.status === 'error') {
+            if (res.status !== 'ok') {
                 node.error(res.data);
                 return;
             }
@@ -123,9 +123,9 @@ module.exports = (RED) => {
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('/json/detail.php', params);
+            const res = await Tankerkoenig2Request('GET', '/json/detail.php', params);
 
-            if (res.status === 'error') {
+            if (res.status !== 'ok') {
                 node.error(res.data);
                 return;
             }
@@ -138,14 +138,79 @@ module.exports = (RED) => {
     RED.nodes.registerType('tankerkoenig2-detail', Tankerkoenig2Detail);
 
 
-    async function Tankerkoenig2Request (path, params) {
+    function Tankerkoenig2Complaint (input) {
+        RED.nodes.createNode(this, input);
+        const node = this;
+
+        [
+            'configNode',
+            'id',
+            'type',
+            'correction',
+            'ts',
+            'name',
+        ].forEach(k => node[k] = input[k]);
+
+        node.config = RED.nodes.getNode(node.configNode);
+        if (!node.config || !node.config.key) {
+            node.error('Configuration node is invalid');
+            return;
+        }
+
+        node.on('input', async (msg) => {
+            const params = {
+                id:         msg.id         || node.id,
+                type:       msg.type       || node.type,
+                correction: msg.correction || node.correction || false,
+                ts:         msg.ts         || node.ts         || false,
+                apikey:     node.config.key,
+            };
+
+            if (!params.correction) {
+                delete params.correction;
+            }
+
+            if (!params.ts) {
+                delete params.ts;
+            }
+
+            const res = await Tankerkoenig2Request('POST', '/json/complaint.php', params);
+
+            if (res.status !== 'ok') {
+                node.error(res.data);
+                return;
+            }
+
+            msg.payload = res.data;
+            node.send(msg);
+        });
+    }
+
+    RED.nodes.registerType('tankerkoenig2-complaint', Tankerkoenig2Complaint);
+
+
+    async function Tankerkoenig2Request (method, path, params) {
         return new Promise((resolve, reject) => {
             const req_opts = {
                 hostname: 'creativecommons.tankerkoenig.de',
                 port: 443,
-                path: path + '?' + new URLSearchParams(params).toString(),
-                method: 'GET',
+                method: method,
+                path: path,
             };
+
+            switch (method) {
+                case 'GET':
+                    req_opts.path += '?' + new URLSearchParams(params).toString();
+                    break;
+
+                case 'POST':
+                    params = JSON.stringify(params);
+                    req_opts.headers = {
+                        'Content-Type':   'application/json',
+                        'Content-Length': params.length,
+                    };
+                    break;
+            }
 
             const req = https.request(req_opts, (res) => {
                 let data = '';
@@ -158,8 +223,8 @@ module.exports = (RED) => {
                     try {
                         data = JSON.parse(data);
 
-                        if (data.status === 'error') {
-                            throw data.message;
+                        if (!data.ok) {
+                            throw data.message || 'unknown error';
                         }
 
                         resolve({
@@ -182,6 +247,10 @@ module.exports = (RED) => {
                     data: error,
                 });
             });
+
+            if (method === 'POST') {
+                req.write(params);
+            }
 
             req.end();
         });
