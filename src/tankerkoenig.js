@@ -5,6 +5,9 @@ module.exports = (RED) => {
 
     function Tankerkoenig2Config (input) {
         RED.nodes.createNode(this, input);
+        const node = this;
+
+        node.key = this.credentials.key;
     }
 
     RED.nodes.registerType('tankerkoenig2-config', Tankerkoenig2Config, {
@@ -31,9 +34,9 @@ module.exports = (RED) => {
         ].forEach(k => node[k] = input[k]);
 
         node.config = RED.nodes.getNode(node.configNode);
-        if (!node.config || !node.config.credentials.key) {
+        if (!node.config || !node.config.key) {
             node.error('Configuration node is invalid');
-            return false;
+            return;
         }
 
         node.on('input', async (msg) => {
@@ -43,7 +46,7 @@ module.exports = (RED) => {
                 rad:    msg.radius    || node.radius,
                 sort:   msg.sort      || node.sort,
                 type:   msg.fueltype  || node.fueltype,
-                apikey: node.config.credentials.key,
+                apikey: node.config.key,
             };
 
             const res = await Tankerkoenig2Request('/json/list.php', params);
@@ -72,15 +75,15 @@ module.exports = (RED) => {
         ].forEach(k => node[k] = input[k]);
 
         node.config = RED.nodes.getNode(node.configNode);
-        if (!node.config || !node.config.credentials.key) {
+        if (!node.config || !node.config.key) {
             node.error('Configuration node is invalid');
-            return false;
+            return;
         }
 
         node.on('input', async (msg) => {
             const params = {
-                ids:    msg.ids  || node.ids,
-                apikey: node.config.credentials.key,
+                ids:    msg.ids || node.ids,
+                apikey: node.config.key,
             };
 
             const res = await Tankerkoenig2Request('/json/prices.php', params);
@@ -109,15 +112,15 @@ module.exports = (RED) => {
         ].forEach(k => node[k] = input[k]);
 
         node.config = RED.nodes.getNode(node.configNode);
-        if (!node.config || !node.config.credentials.key) {
+        if (!node.config || !node.config.key) {
             node.error('Configuration node is invalid');
-            return false;
+            return;
         }
 
         node.on('input', async (msg) => {
             const params = {
                 id:     msg.id || node.id,
-                apikey: node.config.credentials.key,
+                apikey: node.config.key,
             };
 
             const res = await Tankerkoenig2Request('/json/detail.php', params);
