@@ -23,7 +23,7 @@
                 type: 'text',
             },
         },
-        label: () => {
+        label: function () {
             return this.name || 'Tankerkönig 2 Config';
         },
     });
@@ -49,7 +49,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-fueltype"><i class="fa fa-car"></i> Fuel type</label>
-        <select id="node-input-fueltype">
+        <select id="node-input-fueltype" style="width: 70%;">
             <option value="all">All</option>
             <option value="e5">E5</option>
             <option value="e10">E10</option>
@@ -58,7 +58,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-sort"><i class="fa fa-sort"></i> Sort</label>
-        <select id="node-input-sort">
+        <select id="node-input-sort" style="width: 70%;">
             <option value="dist">Distance</option>
             <option value="price">Price</option>
         </select>
@@ -147,10 +147,10 @@
         inputs: 1,
         outputs: 1,
         paletteLabel: 'Tankerkönig Radius',
-        label: () => {
+        label: function () {
             return this.name || 'Tankerkönig Radius';
         },
-        labelStyle: () => {
+        labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
         },
     });
@@ -213,10 +213,10 @@
         inputs: 1,
         outputs: 1,
         paletteLabel: 'Tankerkönig Prices',
-        label: () => {
+        label: function () {
             return this.name || 'Tankerkönig Prices';
         },
-        labelStyle: () => {
+        labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
         },
     });
@@ -279,10 +279,10 @@
         inputs: 1,
         outputs: 1,
         paletteLabel: 'Tankerkönig Detail',
-        label: () => {
+        label: function () {
             return this.name || 'Tankerkönig Detail';
         },
-        labelStyle: () => {
+        labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
         },
     });
