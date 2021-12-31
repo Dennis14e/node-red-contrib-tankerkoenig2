@@ -98,6 +98,43 @@ module.exports = (RED) => {
     RED.nodes.registerType('tankerkoenig2-prices', Tankerkoenig2Prices);
 
 
+    function Tankerkoenig2Detail (input) {
+        RED.nodes.createNode(this, input);
+        const node = this;
+
+        [
+            'configNode',
+            'id',
+            'name',
+        ].forEach(k => node[k] = input[k]);
+
+        node.config = RED.nodes.getNode(node.configNode);
+        if (!node.config || !node.config.credentials.key) {
+            node.error('Configuration node is invalid');
+            return false;
+        }
+
+        node.on('input', async (msg) => {
+            const params = {
+                id:     msg.id || node.id,
+                apikey: node.config.credentials.key,
+            };
+
+            const res = await Tankerkoenig2Request('/json/detail.php', params);
+
+            if (res.status === 'error') {
+                node.error(res.data);
+                return;
+            }
+
+            msg.payload = res.data;
+            node.send(msg);
+        });
+    }
+
+    RED.nodes.registerType('tankerkoenig2-detail', Tankerkoenig2Detail);
+
+
     async function Tankerkoenig2Request (path, params) {
         return new Promise((resolve, reject) => {
             const req_opts = {
