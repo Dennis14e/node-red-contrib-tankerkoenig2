@@ -159,7 +159,7 @@
         <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
-        <label for="node-input-ids"><i class="fa fa-globe"></i> IDs</label>
+        <label for="node-input-ids"><i class="fa fa-database"></i> IDs</label>
         <input type="text" id="node-input-ids">
     </div>
     <div class="form-row">
@@ -219,7 +219,7 @@
         <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
-        <label for="node-input-id"><i class="fa fa-globe"></i> ID</label>
+        <label for="node-input-id"><i class="fa fa-database"></i> ID</label>
         <input type="text" id="node-input-id">
     </div>
     <div class="form-row">
@@ -279,7 +279,7 @@
         <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
-        <label for="node-input-complaintType"><i class="fa fa-globe"></i> Complaint type</label>
+        <label for="node-input-complaintType"><i class="fa fa-list"></i> Complaint type</label>
         <select id="node-input-complaintType" style="width: 70%;">
             <option value=""></option>
             <option value="wrongPetrolStationName">wrongPetrolStationName</option>
@@ -297,12 +297,12 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-correction"><i class="fa fa-globe"></i> Correction</label>
+        <label for="node-input-correction"><i class="fa fa-pencil-square-o"></i> Correction</label>
         <input type="text" id="node-input-correction">
     </div>
     <div class="form-row">
-        <label for="node-input-ts"><i class="fa fa-globe"></i> UNIX timestamp</label>
-        <input type="number" id="node-input-ts">
+        <label for="node-input-timestamp"><i class="fa fa-clock-o"></i> UNIX timestamp</label>
+        <input type="number" id="node-input-timestamp">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -334,7 +334,7 @@
         <dd>the optional correction</dd>
 
         <dt class="optional">
-            ts
+            timestamp
             <span class="property-type">number</span>
         </dt>
         <dd>the optional unix timestamp</dd>
@@ -351,15 +351,15 @@
                 required: true,
                 type: 'tankerkoenig2-config',
             },
-            type: {
-                value: '',
-                required: false,
-            },
             complaintType: {
                 value: '',
                 required: false,
             },
-            ts: {
+            correction: {
+                value: '',
+                required: false,
+            },
+            timestamp: {
                 value: '',
                 required: false,
                 validate: RED.validators.number(),

@@ -147,7 +147,7 @@ module.exports = (RED) => {
             'id',
             'complaintType',
             'correction',
-            'ts',
+            'timestamp',
             'name',
         ].forEach(k => node[k] = input[k]);
 
@@ -162,7 +162,7 @@ module.exports = (RED) => {
                 id:         msg.id            || node.id,
                 type:       msg.complaintType || node.complaintType,
                 correction: msg.correction    || node.correction     || false,
-                ts:         msg.ts            || node.ts             || false,
+                ts:         msg.timestamp     || node.timestamp      || false,
                 apikey:     node.config.key,
             };
 
