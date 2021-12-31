@@ -29,7 +29,7 @@ module.exports = (RED) => {
             'longitude',
             'radius',
             'sort',
-            'fueltype',
+            'fuelType',
             'name',
         ].forEach(k => node[k] = input[k]);
 
@@ -45,7 +45,7 @@ module.exports = (RED) => {
                 lng:    msg.longitude || node.longitude,
                 rad:    msg.radius    || node.radius,
                 sort:   msg.sort      || node.sort,
-                type:   msg.fueltype  || node.fueltype,
+                type:   msg.fuelType  || node.fuelType,
                 apikey: node.config.key,
             };
 
@@ -145,7 +145,7 @@ module.exports = (RED) => {
         [
             'configNode',
             'id',
-            'type',
+            'complaintType',
             'correction',
             'ts',
             'name',
@@ -159,10 +159,10 @@ module.exports = (RED) => {
 
         node.on('input', async (msg) => {
             const params = {
-                id:         msg.id         || node.id,
-                type:       msg.type       || node.type,
-                correction: msg.correction || node.correction || false,
-                ts:         msg.ts         || node.ts         || false,
+                id:         msg.id            || node.id,
+                type:       msg.complaintType || node.complaintType,
+                correction: msg.correction    || node.correction     || false,
+                ts:         msg.ts            || node.ts             || false,
                 apikey:     node.config.key,
             };
 
