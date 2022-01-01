@@ -1,0 +1,32 @@
+{
+    "tankerkoenig2": {
+        "label": {
+            "api-config": "API Config",
+            "api-key": "API key",
+            "complaint-type": "Complaint type",
+            "correction": "Correction",
+            "fuel-type": "Fuel type",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "radius": "Radius (km)",
+            "sort": "Sort",
+            "station-uuid": "Gas station UUID",
+            "station-uuids": "Gas station UUIDs",
+            "timestamp": "UNIX timestamp"
+        },
+        "option": {
+            "all": "All",
+            "e5": "E5",
+            "e10": "E10",
+            "diesel": "Diesel",
+            "distance": "Distance",
+            "price": "Price"
+        },
+        "palette": {
+            "radius": "Tankerkoenig Radius",
+            "detail": "Tankerkoenig Detail",
+            "prices": "Tankerkoenig Prices",
+            "complaint": "Tankerkoenig Complaint"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "tankerkoenig2": {
+        "label": {
+            "api-key": "API-Schlüssel",
+            "complaint-type": "Beschwerdeart",
+            "correction": "Korrektur",
+            "fuel-type": "Spritsorte",
+            "sort": "Sortierung",
+            "station-uuid": "Tankstellen-UUID",
+            "station-uuids": "Tankstellen-UUIDs",
+            "timestamp": "UNIX Timestamp"
+        },
+        "option": {
+            "all": "Alle",
+            "e5": "E5 Super",
+            "e10": "E10 Super",
+            "distance": "Distanz",
+            "price": "Preis"
+        },
+        "palette": {
+            "radius": "Tankerkönig Radius",
+            "detail": "Tankerkönig Detail",
+            "prices": "Tankerkönig Preise",
+            "complaint": "Tankerkönig Beschwerde"
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <script type="text/html" data-template-name="tankerkoenig2-config">
     <div class="form-row">
-        <label for="node-config-input-key"><i class="fa fa-key"></i> API Key</label>
-        <input type="text" id="node-config-input-key">
+        <label for="node-config-input-key"><i class="fa fa-key"></i> <span data-i18n="tankerkoenig2.label.api-key"></span></label>
+        <input type="text" id="node-config-input-key" data-i18n="[placeholder]tankerkoenig2.label.api-key">
     </div>
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -32,37 +32,37 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-radius">
     <div class="form-row">
-        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
-        <input type="text" id="node-input-configNode">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="tankerkoenig2.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]tankerkoenig2.label.api-config">
     </div>
     <div class="form-row">
-        <label for="node-input-latitude"><i class="fa fa-globe"></i> Latitude</label>
-        <input type="text" id="node-input-latitude">
+        <label for="node-input-latitude"><i class="fa fa-globe"></i> <span data-i18n="tankerkoenig2.label.latitude"></span></label>
+        <input type="text" id="node-input-latitude" data-i18n="[placeholder]tankerkoenig2.label.latitude">
     </div>
     <div class="form-row">
-        <label for="node-input-longitude"><i class="fa fa-globe"></i> Longitude</label>
-        <input type="text" id="node-input-longitude">
+        <label for="node-input-longitude"><i class="fa fa-globe"></i> <span data-i18n="tankerkoenig2.label.longitude"></span></label>
+        <input type="text" id="node-input-longitude" data-i18n="[placeholder]tankerkoenig2.label.longitude">
     </div>
     <div class="form-row">
-        <label for="node-input-radius"><i class="fa fa-circle-o"></i> Radius (km)</label>
-        <input type="number" id="node-input-radius">
+        <label for="node-input-radius"><i class="fa fa-circle-o"></i> <span data-i18n="tankerkoenig2.label.radius"></span></label>
+        <input type="number" id="node-input-radius" data-i18n="[placeholder]tankerkoenig2.label.radius">
     </div>
     <div class="form-row">
-        <label for="node-input-fuelType"><i class="fa fa-car"></i> Fuel type</label>
+        <label for="node-input-fuelType"><i class="fa fa-car"></i> <span data-i18n="tankerkoenig2.label.fuel-type"></span></label>
         <select id="node-input-fuelType" style="width: 70%;">
             <option value=""></option>
-            <option value="all">All</option>
-            <option value="e5">E5</option>
-            <option value="e10">E10</option>
-            <option value="diesel">Diesel</option>
+            <option value="all" data-i18n="tankerkoenig2.option.all"></option>
+            <option value="e5" data-i18n="tankerkoenig2.option.e5"></option>
+            <option value="e10" data-i18n="tankerkoenig2.option.e10"></option>
+            <option value="diesel" data-i18n="tankerkoenig2.option.diesel"></option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-sort"><i class="fa fa-sort"></i> Sort</label>
+        <label for="node-input-sort"><i class="fa fa-sort"></i> <span data-i18n="tankerkoenig2.label.sort"></span></label>
         <select id="node-input-sort" style="width: 70%;">
             <option value=""></option>
-            <option value="dist">Distance</option>
-            <option value="price">Price</option>
+            <option value="dist" data-i18n="tankerkoenig2.option.distance"></option>
+            <option value="price" data-i18n="tankerkoenig2.option.price"></option>
         </select>
     </div>
     <div class="form-row">
@@ -164,9 +164,9 @@
         },
         inputs: 1,
         outputs: 1,
-        paletteLabel: 'Tankerkönig Radius',
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.radius'),
         label: function () {
-            return this.name || 'Tankerkönig Radius';
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.radius');
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -177,12 +177,12 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-prices">
     <div class="form-row">
-        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
-        <input type="text" id="node-input-configNode">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="tankerkoenig2.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]tankerkoenig2.label.api-config">
     </div>
     <div class="form-row">
-        <label for="node-input-uuid"><i class="fa fa-database"></i> Gas station UUIDs</label>
-        <input type="text" id="node-input-uuid">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> <span data-i18n="tankerkoenig2.label.station-uuids"></span></label>
+        <input type="text" id="node-input-uuid" data-i18n="[placeholder]tankerkoenig2.label.station-uuids">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -225,9 +225,9 @@
         },
         inputs: 1,
         outputs: 1,
-        paletteLabel: 'Tankerkönig Prices',
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.prices'),
         label: function () {
-            return this.name || 'Tankerkönig Prices';
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.prices');
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -238,12 +238,12 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-detail">
     <div class="form-row">
-        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
-        <input type="text" id="node-input-configNode">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="tankerkoenig2.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]tankerkoenig2.label.api-config">
     </div>
     <div class="form-row">
-        <label for="node-input-uuid"><i class="fa fa-database"></i> Gas station UUID</label>
-        <input type="text" id="node-input-uuid">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> <span data-i18n="tankerkoenig2.label.station-uuid"></span></label>
+        <input type="text" id="node-input-uuid" data-i18n="[placeholder]tankerkoenig2.label.station-uuid">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -286,9 +286,9 @@
         },
         inputs: 1,
         outputs: 1,
-        paletteLabel: 'Tankerkönig Detail',
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.detail'),
         label: function () {
-            return this.name || 'Tankerkönig Detail';
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.detail');
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
@@ -299,15 +299,15 @@
 
 <script type="text/html" data-template-name="tankerkoenig2-complaint">
     <div class="form-row">
-        <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
-        <input type="text" id="node-input-configNode">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="tankerkoenig2.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]tankerkoenig2.label.api-config">
     </div>
     <div class="form-row">
-        <label for="node-input-uuid"><i class="fa fa-clock-o"></i> Gas station UUID</label>
-        <input type="number" id="node-input-uuid">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> <span data-i18n="tankerkoenig2.label.station-uuid"></span></label>
+        <input type="text" id="node-input-uuid" data-i18n="[placeholder]tankerkoenig2.label.station-uuid">
     </div>
     <div class="form-row">
-        <label for="node-input-complaintType"><i class="fa fa-list"></i> Complaint type</label>
+        <label for="node-input-complaintType"><i class="fa fa-list"></i> <span data-i18n="tankerkoenig2.label.complaint-type"></span></label>
         <select id="node-input-complaintType" style="width: 70%;">
             <option value=""></option>
             <option value="wrongPetrolStationName">wrongPetrolStationName</option>
@@ -325,12 +325,12 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-correction"><i class="fa fa-pencil-square-o"></i> Correction</label>
-        <input type="text" id="node-input-correction">
+        <label for="node-input-correction"><i class="fa fa-pencil-square-o"></i> <span data-i18n="tankerkoenig2.label.correction"></span></label>
+        <input type="text" id="node-input-correction" data-i18n="[placeholder]tankerkoenig2.label.correction">
     </div>
     <div class="form-row">
-        <label for="node-input-timestamp"><i class="fa fa-clock-o"></i> UNIX timestamp</label>
-        <input type="number" id="node-input-timestamp">
+        <label for="node-input-timestamp"><i class="fa fa-clock-o"></i> <span data-i18n="tankerkoenig2.label.timestamp"></span></label>
+        <input type="number" id="node-input-timestamp" data-i18n="[placeholder]tankerkoenig2.label.timestamp">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -421,9 +421,9 @@
         },
         inputs: 1,
         outputs: 1,
-        paletteLabel: 'Tankerkönig Complaint',
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.complaint'),
         label: function () {
-            return this.name || 'Tankerkönig Complaint';
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2:tankerkoenig2.palette.complaint');
         },
         labelStyle: function () {
             return this.name ? 'node_label_italic' : '';
