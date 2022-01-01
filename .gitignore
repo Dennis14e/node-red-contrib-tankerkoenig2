@@ -30,4 +30,3 @@ jspm_packages/
 # dev
 test/data/*
 !test/data/package.json
-!test/data/lib/flows
