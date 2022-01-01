@@ -99,6 +99,12 @@
             <span class="property-type">string</span>
         </dt>
         <dd>the fuel type (possible values: <code>all</code>, <code>e5</code>, <code>e10</code>, <code>diesel</code>)</dd>
+
+        <dt class="optional">
+            sort
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the sorting property (possible values: <code>dist</code>, <code>price</code>)</dd>
     </dl>
 </script>
 
@@ -115,25 +121,41 @@
             latitude: {
                 value: '',
                 required: false,
-                validate: RED.validators.regex(/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/),
+                validate: RED.validators.regex(/^$|^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/),
             },
             longitude: {
                 value: '',
                 required: false,
-                validate: RED.validators.regex(/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/),
+                validate: RED.validators.regex(/^$|^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/),
             },
             radius: {
                 value: 5,
                 required: false,
-                validate: RED.validators.number(),
+                validate: RED.validators.regex(/^$|^\d+$/),
             },
             fuelType: {
                 value: '',
                 required: false,
+                validate: function (v) {
+                    return [
+                        '',
+                        'all',
+                        'e5',
+                        'e10',
+                        'diesel',
+                    ].includes(v);
+                },
             },
             sort: {
                 value: '',
                 required: false,
+                validate: function (v) {
+                    return [
+                        '',
+                        'dist',
+                        'price',
+                    ].includes(v);
+                },
             },
             name: {
                 value: '',
@@ -194,6 +216,7 @@
             ids: {
                 value: '',
                 required: false,
+                validate: RED.validators.regex(/^$|^[a-z\d\-,]+$/i),
             },
             name: {
                 value: '',
@@ -254,6 +277,7 @@
             id: {
                 value: '',
                 required: false,
+                validate: RED.validators.regex(/^$|^[a-z\d\-]+$/i),
             },
             name: {
                 value: '',
@@ -354,6 +378,23 @@
             complaintType: {
                 value: '',
                 required: false,
+                validate: function (v) {
+                    return [
+                        '',
+                        'wrongPetrolStationName',
+                        'wrongStatusOpen',
+                        'wrongStatusClosed',
+                        'wrongPriceE5',
+                        'wrongPriceE10',
+                        'wrongPriceDiesel',
+                        'wrongPetrolStationBrand',
+                        'wrongPetrolStationStreet',
+                        'wrongPetrolStationHouseNumber',
+                        'wrongPetrolStationPostcode',
+                        'wrongPetrolStationPlace',
+                        'wrongPetrolStationLocation',
+                    ].includes(v);
+                },
             },
             correction: {
                 value: '',
@@ -362,7 +403,7 @@
             timestamp: {
                 value: '',
                 required: false,
-                validate: RED.validators.number(),
+                validate: RED.validators.regex(/^$|^\d+$/),
             },
             name: {
                 value: '',
