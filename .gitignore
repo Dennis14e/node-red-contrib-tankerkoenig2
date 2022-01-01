@@ -26,3 +26,8 @@ jspm_packages/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# dev
+test/data/*
+!test/data/package.json
+!test/data/lib/flows

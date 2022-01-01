@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "main": "src/tankerkoenig.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node ./test/start.js"
     },
     "repository": {
         "type": "git",
@@ -19,6 +19,10 @@
         "url": "https://github.com/Dennis14e/node-red-contrib-tankerkoenig2/issues"
     },
     "homepage": "https://github.com/Dennis14e/node-red-contrib-tankerkoenig2#readme",
+    "devDependencies": {
+        "express": "~4.17.2",
+        "node-red": "~2.1.4"
+    },
     "node-red": {
         "nodes": {
             "tankerkoenig2": "src/tankerkoenig.js"
