@@ -54,7 +54,7 @@ module.exports = (RED) => {
                     // Restructure stations
                     if (res.stations) {
                         for (let i = 0; i < res.stations.length; i++) {
-                            res.stations[i] = Tankerkoenig2RewriteStation(res.stations[i]);
+                            res.stations[i] = Tankerkoenig2RewriteStation(res.stations[i], params.type);
                         }
                     }
 
@@ -276,7 +276,7 @@ module.exports = (RED) => {
     }
 
 
-    function Tankerkoenig2RewriteStation (station) {
+    function Tankerkoenig2RewriteStation (station, fuelType = false) {
         station.prices = {};
 
         for (const key of Object.keys(station)) {
@@ -286,8 +286,8 @@ module.exports = (RED) => {
             }
         }
 
-        if (station.price) {
-            station.prices[params.type] = station.price;
+        if (station.price && fuelType) {
+            station.prices[fuelType] = station.price;
             delete station.price;
         }
 
