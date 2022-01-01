@@ -181,8 +181,8 @@
         <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
-        <label for="node-input-ids"><i class="fa fa-database"></i> IDs</label>
-        <input type="text" id="node-input-ids">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> Gas station UUIDs</label>
+        <input type="text" id="node-input-uuid">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -191,15 +191,15 @@
 </script>
 
 <script type="text/html" data-help-name="tankerkoenig2-prices">
-    <p>Get fuel prices by gas station IDs from Tankerkönig.</p>
+    <p>Get fuel prices by gas station UUIDs from Tankerkönig.</p>
 
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            ids
-            <span class="property-type">string</span>
+            uuid
+            <span class="property-type">string | array</span>
         </dt>
-        <dd>comma-separated list of gas station IDs</dd>
+        <dd>comma-separated string or array of gas station UUIDs</dd>
     </dl>
 </script>
 
@@ -213,7 +213,7 @@
                 required: true,
                 type: 'tankerkoenig2-config',
             },
-            ids: {
+            uuid: {
                 value: '',
                 required: false,
                 validate: RED.validators.regex(/^$|^[a-z\d\-,]+$/i),
@@ -242,8 +242,8 @@
         <input type="text" id="node-input-configNode">
     </div>
     <div class="form-row">
-        <label for="node-input-id"><i class="fa fa-database"></i> ID</label>
-        <input type="text" id="node-input-id">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> Gas station UUID</label>
+        <input type="text" id="node-input-uuid">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -252,15 +252,15 @@
 </script>
 
 <script type="text/html" data-help-name="tankerkoenig2-detail">
-    <p>Get gas station details by gas station id from Tankerkönig.</p>
+    <p>Get gas station details by gas station UUID from Tankerkönig.</p>
 
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            id
+            uuid
             <span class="property-type">string</span>
         </dt>
-        <dd>the gas station id</dd>
+        <dd>the gas station UUID</dd>
     </dl>
 </script>
 
@@ -274,7 +274,7 @@
                 required: true,
                 type: 'tankerkoenig2-config',
             },
-            id: {
+            uuid: {
                 value: '',
                 required: false,
                 validate: RED.validators.regex(/^$|^[a-z\d\-]+$/i),
@@ -301,6 +301,10 @@
     <div class="form-row">
         <label for="node-input-configNode"><i class="fa fa-cog"></i> API Config</label>
         <input type="text" id="node-input-configNode">
+    </div>
+    <div class="form-row">
+        <label for="node-input-uuid"><i class="fa fa-clock-o"></i> Gas station UUID</label>
+        <input type="number" id="node-input-uuid">
     </div>
     <div class="form-row">
         <label for="node-input-complaintType"><i class="fa fa-list"></i> Complaint type</label>
@@ -340,10 +344,10 @@
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            id
+            uuid
             <span class="property-type">string</span>
         </dt>
-        <dd>the gas station id</dd>
+        <dd>the gas station UUID</dd>
 
         <dt class="optional">
             complaintType
@@ -374,6 +378,11 @@
                 value: '',
                 required: true,
                 type: 'tankerkoenig2-config',
+            },
+            uuid: {
+                value: '',
+                required: false,
+                validate: RED.validators.regex(/^$|^[a-z\d\-]+$/i),
             },
             complaintType: {
                 value: '',

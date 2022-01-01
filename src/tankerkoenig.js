@@ -28,8 +28,8 @@ module.exports = (RED) => {
             'latitude',
             'longitude',
             'radius',
-            'sort',
             'fuelType',
+            'sort',
             'name',
         ].forEach(k => node[k] = input[k]);
 
@@ -44,20 +44,29 @@ module.exports = (RED) => {
                 lat:    msg.latitude  || node.latitude,
                 lng:    msg.longitude || node.longitude,
                 rad:    msg.radius    || node.radius,
-                sort:   msg.sort      || node.sort,
-                type:   msg.fuelType  || node.fuelType,
+                sort:   msg.sort      || node.sort       || 'dist',
+                type:   msg.fuelType  || node.fuelType   || 'all',
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('GET', '/json/list.php', params);
+            Tankerkoenig2Request('GET', 'list.php', params)
+                .then((res) => {
+                    // Restructure stations
+                    if (res.stations) {
+                        for (let i = 0; i < res.stations.length; i++) {
+                            res.stations[i] = Tankerkoenig2RewriteStation(res.stations[i]);
+                        }
+                    }
 
-            if (res.status !== 'ok') {
-                node.error(res.data);
-                return;
-            }
-
-            msg.payload = res.data;
-            node.send(msg);
+                    msg.payload = res;
+                })
+                .catch((error) => {
+                    msg.payload = error;
+                    node.error(error);
+                })
+                .finally(() => {
+                    node.send(msg);
+                });
         });
     }
 
@@ -70,7 +79,7 @@ module.exports = (RED) => {
 
         [
             'configNode',
-            'ids',
+            'uuid',
             'name',
         ].forEach(k => node[k] = input[k]);
 
@@ -82,19 +91,25 @@ module.exports = (RED) => {
 
         node.on('input', async (msg) => {
             const params = {
-                ids:    msg.ids || node.ids,
+                ids:    msg.uuid || node.uuid,
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('GET', '/json/prices.php', params);
-
-            if (res.status !== 'ok') {
-                node.error(res.data);
-                return;
+            if (Array.isArray(params.ids)) {
+                params.ids = params.ids.join(',');
             }
 
-            msg.payload = res.data;
-            node.send(msg);
+            Tankerkoenig2Request('GET', 'prices.php', params)
+                .then((res) => {
+                    msg.payload = res;
+                })
+                .catch((error) => {
+                    msg.payload = error;
+                    node.error(error);
+                })
+                .finally(() => {
+                    node.send(msg);
+                });
         });
     }
 
@@ -107,7 +122,7 @@ module.exports = (RED) => {
 
         [
             'configNode',
-            'id',
+            'uuid',
             'name',
         ].forEach(k => node[k] = input[k]);
 
@@ -119,19 +134,26 @@ module.exports = (RED) => {
 
         node.on('input', async (msg) => {
             const params = {
-                id:     msg.id || node.id,
+                id:     msg.uuid || node.uuid,
                 apikey: node.config.key,
             };
 
-            const res = await Tankerkoenig2Request('GET', '/json/detail.php', params);
+            Tankerkoenig2Request('GET', 'detail.php', params)
+                .then((res) => {
+                    // Restructure station
+                    if (res.station) {
+                        res.station = Tankerkoenig2RewriteStation(res.station);
+                    }
 
-            if (res.status !== 'ok') {
-                node.error(res.data);
-                return;
-            }
-
-            msg.payload = res.data;
-            node.send(msg);
+                    msg.payload = res;
+                })
+                .catch((error) => {
+                    msg.payload = error;
+                    node.error(error);
+                })
+                .finally(() => {
+                    node.send(msg);
+                });
         });
     }
 
@@ -144,7 +166,7 @@ module.exports = (RED) => {
 
         [
             'configNode',
-            'id',
+            'uuid',
             'complaintType',
             'correction',
             'timestamp',
@@ -159,7 +181,7 @@ module.exports = (RED) => {
 
         node.on('input', async (msg) => {
             const params = {
-                id:         msg.id            || node.id,
+                id:         msg.uuid          || node.uuid,
                 type:       msg.complaintType || node.complaintType,
                 correction: msg.correction    || node.correction     || false,
                 ts:         msg.timestamp     || node.timestamp      || false,
@@ -174,15 +196,17 @@ module.exports = (RED) => {
                 delete params.ts;
             }
 
-            const res = await Tankerkoenig2Request('POST', '/json/complaint.php', params);
-
-            if (res.status !== 'ok') {
-                node.error(res.data);
-                return;
-            }
-
-            msg.payload = res.data;
-            node.send(msg);
+            Tankerkoenig2Request('POST', 'complaint.php', params)
+                .then((res) => {
+                    msg.payload = res;
+                })
+                .catch((error) => {
+                    msg.payload = error;
+                    node.error(error);
+                })
+                .finally(() => {
+                    node.send(msg);
+                });
         });
     }
 
@@ -195,7 +219,7 @@ module.exports = (RED) => {
                 hostname: 'creativecommons.tankerkoenig.de',
                 port: 443,
                 method: method,
-                path: path,
+                path: '/json/' + path,
             };
 
             switch (method) {
@@ -227,25 +251,20 @@ module.exports = (RED) => {
                             throw data.message || 'unknown error';
                         }
 
-                        resolve({
-                            status: 'ok',
-                            data: data,
-                        });
+                        resolve(data);
                     }
                     catch (error) {
                         reject({
+                            ok: false,
                             status: 'error',
-                            data: error,
+                            message: data.message || error,
                         });
                     }
                 });
             });
 
             req.on('error', (error) => {
-                reject({
-                    status: 'error',
-                    data: error,
-                });
+                reject(error);
             });
 
             if (method === 'POST') {
@@ -254,5 +273,24 @@ module.exports = (RED) => {
 
             req.end();
         });
+    }
+
+
+    function Tankerkoenig2RewriteStation (station) {
+        station.prices = {};
+
+        for (const key of Object.keys(station)) {
+            if ([ 'e5', 'e10', 'diesel' ].includes(key)) {
+                station.prices[key] = station[key];
+                delete station[key];
+            }
+        }
+
+        if (station.price) {
+            station.prices[params.type] = station.price;
+            delete station.price;
+        }
+
+        return station;
     }
 }
