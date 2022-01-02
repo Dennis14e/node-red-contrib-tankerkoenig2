@@ -27,6 +27,9 @@ jspm_packages/
 .yarn/install-state.gz
 .pnp.*
 
+# eslint
+eslint_report.json
+
 # dev
 test/data/*
 !test/data/package.json
