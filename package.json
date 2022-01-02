@@ -4,9 +4,9 @@
     "version": "0.0.1",
     "main": "src/tankerkoenig.js",
     "scripts": {
-        "test": "node ./test/start.js",
-        "lint": "eslint --ext js,html,json,yml src test",
-        "lint:report": "eslint --output-file eslint_report.json --format json --ext js,html,json,yml src test"
+        "test": "node ./dev/start.js",
+        "lint": "eslint --ext js,html,json,yml src dev",
+        "lint:report": "eslint --output-file eslint_report.json --format json --ext js,html,json,yml src dev"
     },
     "repository": {
         "type": "git",

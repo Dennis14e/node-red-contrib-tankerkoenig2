@@ -31,5 +31,5 @@ jspm_packages/
 eslint_report.json
 
 # dev
-test/data/*
-!test/data/package.json
+dev/data/*
+!dev/data/package.json
