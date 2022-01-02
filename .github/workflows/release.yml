@@ -39,11 +39,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.4.0
 
+      - name: Get version
+        id: version
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
+
       - name: Get Changelog entry
         uses: mindsers/changelog-reader-action@v2.0.0
         id: changelog
         with:
-          version: ${GITHUB_REF#refs/tags/v}
+          version: ${{ steps.version.outputs.version }}
           path: ./CHANGELOG.md
 
       - name: Release to GitHub
