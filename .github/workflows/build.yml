@@ -36,10 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Test Code Linting
-        run: npm run lint
-
-      - name: Save Code Linting Report JSON
+      - name: Code Linting
         run: npm run lint:report
         continue-on-error: true
 
