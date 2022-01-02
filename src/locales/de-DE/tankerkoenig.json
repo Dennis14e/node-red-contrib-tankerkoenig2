@@ -5,6 +5,8 @@
             "complaint-type": "Beschwerdeart",
             "correction": "Korrektur",
             "fuel-type": "Spritsorte",
+            "latitude": "Breitengrad",
+            "longitude": "Längengrad",
             "sort": "Sortierung",
             "station-uuid": "Tankstellen-UUID",
             "station-uuids": "Tankstellen-UUIDs",
