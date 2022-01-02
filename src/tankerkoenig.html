@@ -1,3 +1,7 @@
+<script type="text/javascript">
+    /* global RED */
+</script>
+
 <script type="text/html" data-template-name="tankerkoenig2-config">
     <div class="form-row">
         <label for="node-config-input-key"><i class="fa fa-key"></i> <span data-i18n="tankerkoenig2.label.api-key"></span></label>
@@ -277,7 +281,7 @@
             uuid: {
                 value: '',
                 required: false,
-                validate: RED.validators.regex(/^$|^[a-z\d\-]+$/i),
+                validate: RED.validators.regex(/^$|^[a-z\d-]+$/i),
             },
             name: {
                 value: '',
@@ -382,7 +386,7 @@
             uuid: {
                 value: '',
                 required: false,
-                validate: RED.validators.regex(/^$|^[a-z\d\-]+$/i),
+                validate: RED.validators.regex(/^$|^[a-z\d-]+$/i),
             },
             complaintType: {
                 value: '',

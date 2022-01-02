@@ -293,4 +293,4 @@ module.exports = (RED) => {
 
         return station;
     }
-}
+};
