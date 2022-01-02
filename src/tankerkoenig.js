@@ -228,9 +228,9 @@ module.exports = (RED) => {
                     break;
 
                 case 'POST':
-                    params = JSON.stringify(params);
+                    params = new URLSearchParams(params).toString();
                     req_opts.headers = {
-                        'Content-Type':   'application/json',
+                        'Content-Type':   'application/x-www-form-urlencoded',
                         'Content-Length': params.length,
                     };
                     break;
@@ -249,6 +249,11 @@ module.exports = (RED) => {
 
                         if (!data.ok) {
                             throw data.message || 'unknown error';
+                        }
+
+                        // complaint has no status
+                        if (!data.status) {
+                            data.status = 'ok';
                         }
 
                         resolve(data);
