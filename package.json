@@ -32,5 +32,8 @@
         "nodes": {
             "tankerkoenig2": "src/tankerkoenig.js"
         }
+    },
+    "engines": {
+        "node": ">=12"
     }
 }
