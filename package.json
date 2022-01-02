@@ -31,6 +31,7 @@
         "node-red": "~2.1.4"
     },
     "node-red": {
+        "version": ">=2.0.0",
         "nodes": {
             "tankerkoenig2": "src/tankerkoenig.js"
         }
