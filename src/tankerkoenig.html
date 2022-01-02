@@ -81,31 +81,31 @@
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            latitude
+            payload.latitude
             <span class="property-type">string</span>
         </dt>
         <dd>the latitude of the location</dd>
 
         <dt class="optional">
-            longitude
+            payload.longitude
             <span class="property-type">string</span>
         </dt>
         <dd>the longitude of the location</dd>
 
         <dt class="optional">
-            radius
+            payload.radius
             <span class="property-type">number</span>
         </dt>
         <dd>the radius from the location (api limits may apply)</dd>
 
         <dt class="optional">
-            fuelType
+            payload.fuelType
             <span class="property-type">string</span>
         </dt>
         <dd>the fuel type (possible values: <code>all</code>, <code>e5</code>, <code>e10</code>, <code>diesel</code>)</dd>
 
         <dt class="optional">
-            sort
+            payload.sort
             <span class="property-type">string</span>
         </dt>
         <dd>the sorting property (possible values: <code>dist</code>, <code>price</code>)</dd>
@@ -200,7 +200,7 @@
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            uuid
+            payload.uuid
             <span class="property-type">string | array</span>
         </dt>
         <dd>comma-separated string or array of gas station UUIDs</dd>
@@ -261,7 +261,7 @@
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            uuid
+            payload.uuid
             <span class="property-type">string</span>
         </dt>
         <dd>the gas station UUID</dd>
@@ -348,25 +348,25 @@
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">
-            uuid
+            payload.uuid
             <span class="property-type">string</span>
         </dt>
         <dd>the gas station UUID</dd>
 
         <dt class="optional">
-            complaintType
+            payload.complaintType
             <span class="property-type">string</span>
         </dt>
         <dd>the complaint type</dd>
 
         <dt class="optional">
-            correction
+            payload.correction
             <span class="property-type">any</span>
         </dt>
         <dd>the optional correction</dd>
 
         <dt class="optional">
-            timestamp
+            payload.timestamp
             <span class="property-type">number</span>
         </dt>
         <dd>the optional unix timestamp</dd>

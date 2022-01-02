@@ -35,17 +35,17 @@ module.exports = (RED) => {
 
         node.config = RED.nodes.getNode(node.configNode);
         if (!node.config || !node.config.key) {
-            node.error('Configuration node is invalid');
-            return;
+            node.config = { key: null };
         }
 
         node.on('input', async (msg) => {
+            msg.payload = msg.payload || {};
             const params = {
-                lat:    msg.latitude  || node.latitude,
-                lng:    msg.longitude || node.longitude,
-                rad:    msg.radius    || node.radius,
-                sort:   msg.sort      || node.sort       || 'dist',
-                type:   msg.fuelType  || node.fuelType   || 'all',
+                lat:    msg.payload.latitude  || node.latitude,
+                lng:    msg.payload.longitude || node.longitude,
+                rad:    msg.payload.radius    || node.radius,
+                sort:   msg.payload.sort      || node.sort       || 'dist',
+                type:   msg.payload.fuelType  || node.fuelType   || 'all',
                 apikey: node.config.key,
             };
 
@@ -85,13 +85,13 @@ module.exports = (RED) => {
 
         node.config = RED.nodes.getNode(node.configNode);
         if (!node.config || !node.config.key) {
-            node.error('Configuration node is invalid');
-            return;
+            node.config = { key: null };
         }
 
         node.on('input', async (msg) => {
+            msg.payload = msg.payload || {};
             const params = {
-                ids:    msg.uuid || node.uuid,
+                ids:    msg.payload.uuid || node.uuid,
                 apikey: node.config.key,
             };
 
@@ -128,13 +128,13 @@ module.exports = (RED) => {
 
         node.config = RED.nodes.getNode(node.configNode);
         if (!node.config || !node.config.key) {
-            node.error('Configuration node is invalid');
-            return;
+            node.config = { key: null };
         }
 
         node.on('input', async (msg) => {
+            msg.payload = msg.payload || {};
             const params = {
-                id:     msg.uuid || node.uuid,
+                id:     msg.payload.uuid || node.uuid,
                 apikey: node.config.key,
             };
 
@@ -175,16 +175,16 @@ module.exports = (RED) => {
 
         node.config = RED.nodes.getNode(node.configNode);
         if (!node.config || !node.config.key) {
-            node.error('Configuration node is invalid');
-            return;
+            node.config = { key: null };
         }
 
         node.on('input', async (msg) => {
+            msg.payload = msg.payload || {};
             const params = {
-                id:         msg.uuid          || node.uuid,
-                type:       msg.complaintType || node.complaintType,
-                correction: msg.correction    || node.correction     || false,
-                ts:         msg.timestamp     || node.timestamp      || false,
+                id:         msg.payload.uuid          || node.uuid,
+                type:       msg.payload.complaintType || node.complaintType,
+                correction: msg.payload.correction    || node.correction     || false,
+                ts:         msg.payload.timestamp     || node.timestamp      || false,
                 apikey:     node.config.key,
             };
 
