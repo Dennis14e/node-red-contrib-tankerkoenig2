@@ -28,7 +28,7 @@
         "eslint-plugin-html": "~6.2.0",
         "eslint-plugin-json-es": "~1.5.4",
         "express": "~4.17.2",
-        "node-red": "~2.1.4"
+        "node-red": "~2.1.5"
     },
     "node-red": {
         "version": ">=2.0.0",
