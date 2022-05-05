@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update dependencies
 
+### Fixed
+- Use correct ECMAScript version in .eslintrc.json
+
 ## [1.0.4] - 2022-02-16
 ### Changed
 - Update dependencies
