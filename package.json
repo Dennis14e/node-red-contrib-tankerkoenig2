@@ -1,7 +1,7 @@
 {
     "name": "node-red-contrib-tankerkoenig2",
     "description": "Node-RED nodes to communicate with the API of Tankerkoenig.de",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "main": "src/tankerkoenig.js",
     "scripts": {
         "test": "node ./dev/start.js",
