@@ -1,0 +1,133 @@
+<script type="text/html" data-template-name="tankerkoenig2-complaint">
+    <div class="form-row">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.station-uuid"></span></label>
+        <input type="text" id="node-input-uuid" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.station-uuid">
+    </div>
+    <div class="form-row">
+        <label for="node-input-complaintType"><i class="fa fa-list"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.complaint-type"></span></label>
+        <select id="node-input-complaintType" style="width: 70%;">
+            <option value=""></option>
+            <option value="wrongPetrolStationName">wrongPetrolStationName</option>
+            <option value="wrongStatusOpen">wrongStatusOpen</option>
+            <option value="wrongStatusClosed">wrongStatusClosed</option>
+            <option value="wrongPriceE5">wrongPriceE5</option>
+            <option value="wrongPriceE10">wrongPriceE10</option>
+            <option value="wrongPriceDiesel">wrongPriceDiesel</option>
+            <option value="wrongPetrolStationBrand">wrongPetrolStationBrand</option>
+            <option value="wrongPetrolStationStreet">wrongPetrolStationStreet</option>
+            <option value="wrongPetrolStationHouseNumber">wrongPetrolStationHouseNumber</option>
+            <option value="wrongPetrolStationPostcode">wrongPetrolStationPostcode</option>
+            <option value="wrongPetrolStationPlace">wrongPetrolStationPlace</option>
+            <option value="wrongPetrolStationLocation">wrongPetrolStationLocation</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-correction"><i class="fa fa-pencil-square-o"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.correction"></span></label>
+        <input type="text" id="node-input-correction" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.correction">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timestamp"><i class="fa fa-clock-o"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.timestamp"></span></label>
+        <input type="number" id="node-input-timestamp" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.timestamp">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tankerkoenig2-complaint">
+    <p>Send complaint to Tankerkönig/MTS-K.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">
+            payload.uuid
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the gas station UUID</dd>
+
+        <dt class="optional">
+            payload.complaintType
+            <span class="property-type">string</span>
+        </dt>
+        <dd>the complaint type</dd>
+
+        <dt class="optional">
+            payload.correction
+            <span class="property-type">any</span>
+        </dt>
+        <dd>the optional correction</dd>
+
+        <dt class="optional">
+            payload.timestamp
+            <span class="property-type">number</span>
+        </dt>
+        <dd>the optional unix timestamp</dd>
+    </dl>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-complaint', {
+        category: 'Tankerkönig 2',
+        icon: 'font-awesome/fa-car',
+        defaults: {
+            configNode: {
+                value: '',
+                required: true,
+                type: 'tankerkoenig2-config',
+            },
+            uuid: {
+                value: '',
+                required: false,
+                validate: RED.validators.regex(/^$|^[a-z\d-]+$/i),
+            },
+            complaintType: {
+                value: '',
+                required: false,
+                validate: function (v) {
+                    return [
+                        '',
+                        'wrongPetrolStationName',
+                        'wrongStatusOpen',
+                        'wrongStatusClosed',
+                        'wrongPriceE5',
+                        'wrongPriceE10',
+                        'wrongPriceDiesel',
+                        'wrongPetrolStationBrand',
+                        'wrongPetrolStationStreet',
+                        'wrongPetrolStationHouseNumber',
+                        'wrongPetrolStationPostcode',
+                        'wrongPetrolStationPlace',
+                        'wrongPetrolStationLocation',
+                    ].includes(v);
+                },
+            },
+            correction: {
+                value: '',
+                required: false,
+            },
+            timestamp: {
+                value: '',
+                required: false,
+                validate: RED.validators.regex(/^$|^\d+$/),
+            },
+            name: {
+                value: '',
+                required: false,
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.palette.complaint'),
+        label: function () {
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.palette.complaint');
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
+    });
+</script>

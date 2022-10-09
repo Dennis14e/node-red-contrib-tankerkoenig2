@@ -1,5 +1,5 @@
 {
-    "tankerkoenig2": {
+    "common": {
         "label": {
             "api-config": "API Config",
             "api-key": "API key",
@@ -23,6 +23,7 @@
             "price": "Price"
         },
         "palette": {
+            "config": "Tankerkoenig Config",
             "radius": "Tankerkoenig Radius",
             "detail": "Tankerkoenig Detail",
             "prices": "Tankerkoenig Prices",

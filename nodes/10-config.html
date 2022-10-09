@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-config', {
+        category: 'config',
+        icon: 'font-awesome/fa-car',
+        defaults: {
+            name: {
+                value: '',
+            },
+        },
+        credentials: {
+            key: {
+                type: 'text',
+                value: '',
+                required: true,
+            },
+        },
+        label: function () {
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.palette.config');
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="tankerkoenig2-config">
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="fa fa-key"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-key"></span></label>
+        <input type="text" id="node-config-input-key" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-key">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>

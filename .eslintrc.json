@@ -1,12 +1,15 @@
 {
     "env": {
-        "es2019": true, // node 12
+        "es2020": true, // node 14 (more or less)
         "node": true
     },
     "extends": "eslint:recommended",
     "plugins": [
         "html"
     ],
+    "globals": {
+        "RED": true
+    },
     "rules": {
         "indent": [
             "error",

@@ -1,0 +1,59 @@
+<script type="text/html" data-template-name="tankerkoenig2-prices">
+    <div class="form-row">
+        <label for="node-input-configNode"><i class="fa fa-cog"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-config"></span></label>
+        <input type="text" id="node-input-configNode" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.api-config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-uuid"><i class="fa fa-database"></i> <span data-i18n="node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.station-uuids"></span></label>
+        <input type="text" id="node-input-uuid" data-i18n="[placeholder]node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.label.station-uuids">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tankerkoenig2-prices">
+    <p>Get fuel prices by gas station UUIDs from Tankerkönig.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">
+            payload.uuid
+            <span class="property-type">string | array</span>
+        </dt>
+        <dd>comma-separated string or array of gas station UUIDs</dd>
+    </dl>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('tankerkoenig2-prices', {
+        category: 'Tankerkönig 2',
+        icon: 'font-awesome/fa-car',
+        defaults: {
+            configNode: {
+                value: '',
+                required: true,
+                type: 'tankerkoenig2-config',
+            },
+            uuid: {
+                value: '',
+                required: false,
+                validate: RED.validators.regex(/^$|^[a-z\d\-,]+$/i),
+            },
+            name: {
+                value: '',
+                required: false,
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        paletteLabel: RED._('node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.palette.prices'),
+        label: function () {
+            return this.name || RED._('node-red-contrib-tankerkoenig2/tankerkoenig2-config:common.palette.prices');
+        },
+        labelStyle: function () {
+            return this.name ? 'node_label_italic' : '';
+        },
+    });
+</script>

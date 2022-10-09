@@ -1,5 +1,5 @@
 {
-    "tankerkoenig2": {
+    "common": {
         "label": {
             "api-key": "API-Schlüssel",
             "complaint-type": "Beschwerdeart",
@@ -20,6 +20,7 @@
             "price": "Preis"
         },
         "palette": {
+            "config": "Tankerkönig Config",
             "radius": "Tankerkönig Radius",
             "detail": "Tankerkönig Detail",
             "prices": "Tankerkönig Preise",
