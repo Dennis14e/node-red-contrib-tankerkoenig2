@@ -35,3 +35,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           extensions: 'html,js,json'
           annotations: true
+
+      - name: Code Testing
+        run: npm run test
