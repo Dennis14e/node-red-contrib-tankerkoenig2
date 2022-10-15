@@ -1,4 +1,8 @@
+const { matchers } = require('jest-json-schema');
 const helper = require('node-red-node-test-helper');
+
+expect.extend(matchers);
+
 
 const configNode = require('../nodes/10-config');
 const radiusNode = require('../nodes/20-radius');
@@ -17,12 +21,66 @@ const config = {
 };
 
 // Berlin
-/*
 const test_location = {
     lat: 52.520008,
     lng: 13.404954,
 };
-*/
+
+const schema = {
+    properties: {
+        ok: { type: 'boolean' },
+        license: { type: 'string' },
+        data: { type: 'string' },
+        status: { type: 'string' },
+        stations: {
+            type: 'array',
+            items: {
+                properties: {
+                    id: { type: 'string' },
+                    name: { type: 'string' },
+                    brand: { type: 'string' },
+                    street: { type: 'string' },
+                    place: { type: 'string' },
+                    lat: { type: 'number' },
+                    lng: { type: 'number' },
+                    dist: { type: 'number' },
+                    isOpen: { type: 'boolean' },
+                    houseNumber: { type: 'string' },
+                    postCode: { type: 'number' },
+                    prices: {
+                        type: 'object',
+                        properties: {
+                            diesel: { type: 'number' },
+                            e5: { type: 'number' },
+                            e10: { type: 'number' },
+                        },
+                    },
+                },
+                required: [
+                    'id',
+                    'name',
+                    'brand',
+                    'street',
+                    'place',
+                    'lat',
+                    'lng',
+                    'dist',
+                    'isOpen',
+                    'houseNumber',
+                    'postCode',
+                    'prices',
+                ],
+            },
+        },
+    },
+    required: [
+        'ok',
+        'license',
+        'data',
+        'status',
+        'stations',
+    ],
+};
 
 helper.init(require.resolve('node-red'));
 
@@ -75,8 +133,6 @@ describe('tankerkoenig2-radius node', () => {
         helper.load([ radiusNode, configNode ], flow, config.credentials, () => {
             const n1 = helper.getNode('n1');
 
-            console.log(n1);
-
             try {
                 expect(n1).toHaveProperty('configNode', 'nc1');
                 expect(n1).toHaveProperty('config');
@@ -87,6 +143,46 @@ describe('tankerkoenig2-radius node', () => {
             catch (err) {
                 done(err);
             }
+        });
+    });
+
+    it('should return valid json', (done) => {
+        const flow = [
+            {
+                id: 'n1',
+                type: 'tankerkoenig2-radius',
+                name: 'tankerkoenig2-radius',
+                configNode: 'nc1',
+                wires: [[ 'n2' ]],
+            },
+            {
+                id: 'n2',
+                type: 'helper',
+            },
+            config.configNode,
+        ];
+
+        helper.load([ radiusNode, configNode ], flow, config.credentials, () => {
+            const n1 = helper.getNode('n1');
+            const n2 = helper.getNode('n2');
+
+            n2.on('input', (msg) => {
+                try {
+                    expect(msg.payload).toMatchSchema(schema);
+                    done();
+                }
+                catch (err) {
+                    done(err);
+                }
+            });
+
+            n1.receive({
+                payload: {
+                    latitude: test_location.lat,
+                    longitude: test_location.lng,
+                    radius: 15,
+                },
+            });
         });
     });
 });
