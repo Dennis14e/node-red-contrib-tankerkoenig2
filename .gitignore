@@ -30,6 +30,9 @@ jspm_packages/
 # eslint
 eslint_report.json
 
+# jest
+/coverage/
+
 # dev
-dev/data/*
-!dev/data/package.json
+/dev/data/*
+!/dev/data/package.json

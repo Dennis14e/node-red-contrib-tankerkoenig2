@@ -6,6 +6,7 @@ expect.extend(matchers);
 
 const configNode = require('../nodes/10-config');
 const radiusNode = require('../nodes/20-radius');
+const complaintNode = require('../nodes/20-complaint');
 
 // Config
 const config = {
@@ -29,65 +30,19 @@ const test_location = {
 const schema = {
     properties: {
         ok: { type: 'boolean' },
-        license: { type: 'string' },
-        data: { type: 'string' },
+        message: { type: 'string' },
         status: { type: 'string' },
-        stations: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'string' },
-                    name: { type: 'string' },
-                    brand: { type: 'string' },
-                    street: { type: 'string' },
-                    place: { type: 'string' },
-                    lat: { type: 'number' },
-                    lng: { type: 'number' },
-                    dist: { type: 'number' },
-                    isOpen: { type: 'boolean' },
-                    houseNumber: { type: 'string' },
-                    postCode: { type: 'number' },
-                    prices: {
-                        type: 'object',
-                        properties: {
-                            diesel: { type: 'number' },
-                            e5: { type: 'number' },
-                            e10: { type: 'number' },
-                        },
-                    },
-                },
-                required: [
-                    'id',
-                    'name',
-                    'brand',
-                    'street',
-                    'place',
-                    'lat',
-                    'lng',
-                    'dist',
-                    'isOpen',
-                    'houseNumber',
-                    'postCode',
-                    'prices',
-                ],
-                additionalProperties: false,
-            },
-        },
     },
     required: [
         'ok',
-        'license',
-        'data',
         'status',
-        'stations',
     ],
     additionalProperties: false,
 };
 
 helper.init(require.resolve('node-red'));
 
-describe('tankerkoenig2-radius node', () => {
+describe('tankerkoenig2-complaint node', () => {
     beforeEach((done) => {
         helper.startServer(done);
     });
@@ -102,18 +57,18 @@ describe('tankerkoenig2-radius node', () => {
         const flow = [
             {
                 id: 'n1',
-                type: 'tankerkoenig2-radius',
-                name: 'tankerkoenig2-radius',
+                type: 'tankerkoenig2-complaint',
+                name: 'tankerkoenig2-complaint',
                 configNode: 'nc1',
             },
             config.configNode,
         ];
 
-        helper.load([ radiusNode, configNode ], flow, config.credentials, () => {
+        helper.load([ complaintNode, configNode ], flow, config.credentials, () => {
             const n1 = helper.getNode('n1');
 
             try {
-                expect(n1).toHaveProperty('name', 'tankerkoenig2-radius');
+                expect(n1).toHaveProperty('name', 'tankerkoenig2-complaint');
                 done();
             }
             catch (err) {
@@ -126,14 +81,14 @@ describe('tankerkoenig2-radius node', () => {
         const flow = [
             {
                 id: 'n1',
-                type: 'tankerkoenig2-radius',
-                name: 'tankerkoenig2-radius',
+                type: 'tankerkoenig2-complaint',
+                name: 'tankerkoenig2-complaint',
                 configNode: 'nc1',
             },
             config.configNode,
         ];
 
-        helper.load([ radiusNode, configNode ], flow, config.credentials, () => {
+        helper.load([ complaintNode, configNode ], flow, config.credentials, () => {
             const n1 = helper.getNode('n1');
 
             try {
@@ -159,17 +114,32 @@ describe('tankerkoenig2-radius node', () => {
                 wires: [[ 'nh1' ]],
             },
             {
+                id: 'n2',
+                type: 'tankerkoenig2-complaint',
+                name: 'tankerkoenig2-complaint',
+                configNode: 'nc1',
+                wires: [[ 'nh2' ]],
+            },
+            {
                 id: 'nh1',
+                type: 'helper',
+            },
+            {
+                id: 'nh2',
                 type: 'helper',
             },
             config.configNode,
         ];
 
-        helper.load([ radiusNode, configNode ], flow, config.credentials, () => {
+        helper.load([ radiusNode, complaintNode, configNode ], flow, config.credentials, () => {
             const n1 = helper.getNode('n1');
+            const n2 = helper.getNode('n2');
             const nh1 = helper.getNode('nh1');
+            const nh2 = helper.getNode('nh2');
 
-            nh1.on('input', (msg) => {
+            nh2.on('input', (msg) => {
+                console.log(msg);
+
                 try {
                     expect(msg.payload).toMatchSchema(schema);
                     done();
@@ -177,6 +147,17 @@ describe('tankerkoenig2-radius node', () => {
                 catch (err) {
                     done(err);
                 }
+            });
+
+            nh1.on('input', (msg) => {
+                n2.receive({
+                    payload: {
+                        uuid: msg.payload.stations[0].id,
+                        complaintType: 'wrongPetrolStationName',
+                        correction: 'test case',
+                        timestamp: 1641031200, // 2022-01-01 12:00:00 UTC+2
+                    },
+                });
             });
 
             n1.receive({

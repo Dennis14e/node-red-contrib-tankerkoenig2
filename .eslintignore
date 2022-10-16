@@ -1,2 +1,3 @@
-dev/data/
+/coverage/
+/dev/data/
 node_modules/
