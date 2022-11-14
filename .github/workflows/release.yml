@@ -51,7 +51,7 @@ jobs:
           path: ./CHANGELOG.md
 
       - name: Release to GitHub
-        uses: ncipollo/release-action@v1.11.1
+        uses: ncipollo/release-action@v1.11.2
         with:
           name: Release v${{ steps.changelog.outputs.version }}
           body: ${{ steps.changelog.outputs.changes }}
