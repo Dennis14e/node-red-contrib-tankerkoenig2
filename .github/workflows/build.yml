@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Code Linting
-        uses: sibiraj-s/action-eslint@v3.0.0
+        uses: sibiraj-s/action-eslint@v3.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           extensions: 'html,js,json'
