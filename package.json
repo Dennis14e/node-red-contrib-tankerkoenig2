@@ -5,8 +5,8 @@
     "main": "src/tankerkoenig.js",
     "scripts": {
         "test": "node ./dev/start.js",
-        "lint": "eslint --ext js,html,json,yml src dev",
-        "lint:report": "eslint --output-file eslint_report.json --format json --ext js,html,json,yml src dev"
+        "lint": "eslint --ext html,js,json src dev",
+        "lint:report": "eslint --output-file eslint_report.json --format json --ext html,js,json src dev"
     },
     "repository": {
         "type": "git",
@@ -24,19 +24,20 @@
     },
     "homepage": "https://github.com/Dennis14e/node-red-contrib-tankerkoenig2#readme",
     "devDependencies": {
-        "eslint": "~8.57.0",
-        "eslint-plugin-html": "~8.1.0",
-        "eslint-plugin-json-es": "~1.6.0",
-        "express": "~4.21.0",
-        "node-red": "~4.1.0"
+        "@eslint/json": "^0.14.0",
+        "@stylistic/eslint-plugin": "^5.7.0",
+        "eslint": "~9.39.2",
+        "eslint-plugin-html": "~8.1.3",
+        "express": "~5.2.1",
+        "node-red": "~4.1.3"
     },
     "node-red": {
-        "version": ">=2.0.0",
+        "version": ">=4.0.0",
         "nodes": {
             "tankerkoenig2": "src/tankerkoenig.js"
         }
     },
     "engines": {
-        "node": ">=12"
+        "node": ">=20.19.0"
     }
 }
