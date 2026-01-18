@@ -1,4 +1,4 @@
-name: Build
+name: Lint
 
 on:
   push:
@@ -12,13 +12,13 @@ on:
       - reopened
       - synchronize
 
-permissions:
-  statuses: write
-
 jobs:
-  build:
-    name: Build
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: read
 
     steps:
       - name: Checkout
