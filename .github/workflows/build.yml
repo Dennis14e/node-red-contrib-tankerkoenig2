@@ -12,6 +12,9 @@ on:
       - reopened
       - synchronize
 
+permissions:
+  statuses: write
+
 jobs:
   build:
     name: Build
