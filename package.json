@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/Dennis14e/node-red-contrib-tankerkoenig2#readme",
     "devDependencies": {
-        "@eslint/json": "^0.14.0",
+        "@eslint/json": "^1.0.1",
         "@stylistic/eslint-plugin": "^5.7.0",
         "eslint": "~9.39.2",
         "eslint-plugin-html": "~8.1.3",
