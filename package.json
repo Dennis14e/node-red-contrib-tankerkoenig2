@@ -29,7 +29,7 @@
         "eslint": "~9.39.2",
         "eslint-plugin-html": "~8.1.3",
         "express": "~5.2.1",
-        "node-red": "~4.1.3"
+        "node-red": "~5.0.1"
     },
     "node-red": {
         "version": ">=4.0.0",
